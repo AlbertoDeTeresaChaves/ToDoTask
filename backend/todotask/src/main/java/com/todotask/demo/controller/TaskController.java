@@ -17,7 +17,7 @@ import com.todotask.demo.model.Task;
 import com.todotask.demo.service.TaskService;
 
 @RestController
-@RequestMapping("api/task")
+@RequestMapping("api/tasks")
 public class TaskController {
 
 	@Autowired
@@ -34,12 +34,12 @@ public class TaskController {
 		return ResponseEntity.ok(taskService.findAll());
 	}
 	
-	@DeleteMapping("{id}")
+	@DeleteMapping("/{id}")
 	public ResponseEntity<?> delete (@PathVariable(value = "id")Long taskId ){
 		
-		Optional<Task> oTask = taskService.findById(taskId);
+		Optional<Task> OptionalTask = taskService.findById(taskId);
 		
-		if(!oTask.isPresent()) {
+		if(!OptionalTask.isPresent()) {
 			return ResponseEntity.notFound().build();
 		}
 		taskService.deleteById(taskId);
