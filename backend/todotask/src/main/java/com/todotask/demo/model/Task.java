@@ -39,6 +39,9 @@ public class Task {
 	@Column(name = "task_name")
 	private String taskName;
 
+	@Column(name = "description")
+	private String description;
+	
 	@Enumerated(EnumType.STRING)
 	@Column(name = "status", nullable = false)
 	private TaskStatus status = TaskStatus.PENDING;
