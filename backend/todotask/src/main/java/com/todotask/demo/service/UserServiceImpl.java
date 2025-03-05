@@ -52,9 +52,10 @@ public class UserServiceImpl implements UserService {
     }
 
 	@Override
+    @Transactional
 	public boolean existsByEmail(String email) {
-		// TODO Auto-generated method stub
-		return false;
+		
+		return userRepository.findByEmail(email).isPresent();
 	}
 
 }
