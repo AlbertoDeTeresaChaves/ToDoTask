@@ -20,6 +20,8 @@ public interface TaskService {
 	
 	public Task save(Task task);
 	
+	public Task updateTask(Long id, Task taskDetails);
+	
 	public void deleteById(Long id);
 	
 }
