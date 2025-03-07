@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,24 +23,44 @@ public class TaskController {
 
 	@Autowired
 	public TaskService taskService;
-	
+
 	@PostMapping
-	public ResponseEntity<?> create (@RequestBody Task task){
-		
+	public ResponseEntity<?> create(@RequestBody Task task) {
+
 		return ResponseEntity.status(HttpStatus.CREATED).body(taskService.save(task));
 	}
-	
+
 	@GetMapping
-	public ResponseEntity<?> readAll (){
+	public ResponseEntity<?> readAll() {
 		return ResponseEntity.ok(taskService.findAll());
 	}
+
+	@GetMapping("/{id}")
+	public ResponseEntity<?> read(@PathVariable(value = "id") Long taskId) {
+
+		Optional<Task> OptionalTask = taskService.findById(taskId);
+
+		if (!OptionalTask.isPresent()) {
+			return ResponseEntity.notFound().build();
+		}
+		
+		return ResponseEntity.ok(taskService.findById(taskId));
+	}
+
+	@PutMapping("/{id}")
+	public ResponseEntity<Task> update(@PathVariable(value = "id") Long taskId, @RequestBody Task taskDetails){
+
+	
+		return ResponseEntity.ok(taskService.updateTask(taskId, taskDetails));
+	}
+	
 	
 	@DeleteMapping("/{id}")
-	public ResponseEntity<?> delete (@PathVariable(value = "id")Long taskId ){
-		
+	public ResponseEntity<?> delete(@PathVariable(value = "id") Long taskId) {
+
 		Optional<Task> OptionalTask = taskService.findById(taskId);
-		
-		if(!OptionalTask.isPresent()) {
+
+		if (!OptionalTask.isPresent()) {
 			return ResponseEntity.notFound().build();
 		}
 		taskService.deleteById(taskId);
