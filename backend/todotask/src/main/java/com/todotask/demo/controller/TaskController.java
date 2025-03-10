@@ -38,23 +38,17 @@ public class TaskController {
 	@GetMapping("/{id}")
 	public ResponseEntity<?> read(@PathVariable(value = "id") Long taskId) {
 
-		Optional<Task> OptionalTask = taskService.findById(taskId);
-
-		if (!OptionalTask.isPresent()) {
-			return ResponseEntity.notFound().build();
-		}
-		
-		return ResponseEntity.ok(taskService.findById(taskId));
+		return taskService.findById(taskId)
+				.map(ResponseEntity::ok)
+				.orElseGet(() -> ResponseEntity.notFound().build());
 	}
 
 	@PutMapping("/{id}")
-	public ResponseEntity<Task> update(@PathVariable(value = "id") Long taskId, @RequestBody Task taskDetails){
+	public ResponseEntity<Task> update(@PathVariable(value = "id") Long taskId, @RequestBody Task taskDetails) {
 
-	
 		return ResponseEntity.ok(taskService.updateTask(taskId, taskDetails));
 	}
-	
-	
+
 	@DeleteMapping("/{id}")
 	public ResponseEntity<?> delete(@PathVariable(value = "id") Long taskId) {
 
