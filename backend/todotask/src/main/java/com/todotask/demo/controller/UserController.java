@@ -52,18 +52,19 @@ public class UserController {
 	
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<?> update(@PathVariable Long id, @RequestBody User user) {
-		Optional<User> OptionalUser = userService.findById(id);
+	public ResponseEntity<?> update(@PathVariable Long id, @RequestBody User userDetails) {
 
-		if (!OptionalUser.isPresent()) {
-			return ResponseEntity.notFound().build();
-		}
-		
-		OptionalUser.get().setUsername(user.getUsername());
-		OptionalUser.get().setEmail(user.getEmail());
-		OptionalUser.get().setPassword(user.getPassword());
-		
-		return ResponseEntity.status(HttpStatus.CREATED).body(userService.save(OptionalUser.get()));
+	    try {
+	        User updatedUser = userService.updateUser(id, userDetails);
+	        return ResponseEntity.ok(updatedUser);
+	    } catch (RuntimeException e) {
+	        if (e.getMessage().equals("Usuario no encontrado")) {
+	            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+	        } else if (e.getMessage().equals("Email ya en uso")) {
+	            return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
+	        }
+	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error inesperado");
+	    }
 	}
 
 	@DeleteMapping("/{id}")
