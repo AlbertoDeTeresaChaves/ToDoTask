@@ -37,17 +37,22 @@ public class UserController {
 	@GetMapping
 	public ResponseEntity<?> readAll() {
 
-		return ResponseEntity.ok(userService.findAll());
+		try {
+			return ResponseEntity.ok(userService.findAll());	
+		}catch(RuntimeException e) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+		}
+		
 	}
 
 	@GetMapping("/{id}")
 	public ResponseEntity<?> read(@PathVariable Long id){
-		Optional<User> OptionalUser = userService.findById(id);
-
-		if (!OptionalUser.isPresent()) {
-			return ResponseEntity.notFound().build();
+		try {
+			return ResponseEntity.ok(userService.findById(id));	
+		}catch(RuntimeException e) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
 		}
-		return ResponseEntity.ok(OptionalUser);
+		
 	}
 	
 	
@@ -69,13 +74,12 @@ public class UserController {
 
 	@DeleteMapping("/{id}")
 	public ResponseEntity<?> delete(@PathVariable Long id) {
-
-		Optional<User> OptionalUser = userService.findById(id);
-
-		if (!OptionalUser.isPresent()) {
-			return ResponseEntity.notFound().build();
+		try {
+			userService.deleteById(id);
+			return ResponseEntity.ok().build();	
+		}catch(RuntimeException e) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
 		}
-		userService.deleteById(id);
-		return ResponseEntity.ok().build();
+
 	}
 }

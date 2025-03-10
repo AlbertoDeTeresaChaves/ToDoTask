@@ -25,19 +25,34 @@ public class UserServiceImpl implements UserService {
 	@Override
 	@Transactional(readOnly = true)
 	public Iterable<User> findAll() {
-		return userRepository.findAll();
+
+		Iterable<User> usersList = userRepository.findAll();
+
+		if (!usersList.iterator().hasNext()) {
+			throw new RuntimeException("No hay usuarios registrados");
+		}
+
+		return usersList;
 	}
 
 	@Override
 	@Transactional(readOnly = true)
 	public Page<User> findAll(Pageable pageable) {
-		return userRepository.findAll(pageable);
+
+		Page<User> usersList = userRepository.findAll(pageable);
+
+		if (usersList.isEmpty()) {
+			throw new RuntimeException("No hay usuarios registrados");
+		}
+
+		return usersList;
 	}
 
 	@Override
 	@Transactional(readOnly = true)
 	public Optional<User> findById(Long id) {
-		return userRepository.findById(id);
+		return Optional.of(userRepository.findById(id)
+				.orElseThrow(() -> new RuntimeException("Usuario no encontrado con ID " + id)));
 	}
 
 	@Override
@@ -52,7 +67,7 @@ public class UserServiceImpl implements UserService {
 		User user = userRepository.findById(id).orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
 
 		user.setUsername(userDetails.getUsername());
-		
+
 		if (!user.getEmail().equals(userDetails.getEmail())) {
 			if (userRepository.findByEmail(userDetails.getEmail()).isPresent()) {
 				throw new RuntimeException("Email ya en uso");
@@ -68,6 +83,12 @@ public class UserServiceImpl implements UserService {
 	@Override
 	@Transactional
 	public void deleteById(Long id) {
+		Optional<User> user = userRepository.findById(id);
+		
+		if(user.isEmpty()) {
+			throw new RuntimeException("Usuario no encotrado con ID: "+id);
+		}
+		
 		userRepository.deleteById(id);
 	}
 
