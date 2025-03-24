@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.todotask.demo.model.User;
@@ -17,9 +18,11 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserServiceImpl implements UserService {
 
 	private final UserRepository userRepository;
+	private final BCryptPasswordEncoder passwordEncoder;
 
 	public UserServiceImpl(UserRepository userRepository) {
 		this.userRepository = userRepository;
+		this.passwordEncoder = new BCryptPasswordEncoder();
 	}
 
 	@Override
@@ -55,11 +58,6 @@ public class UserServiceImpl implements UserService {
 				.orElseThrow(() -> new RuntimeException("Usuario no encontrado con ID " + id)));
 	}
 
-	@Override
-	@Transactional
-	public User save(User user) {
-		return userRepository.save(user);
-	}
 
 	@Override
 	@Transactional
@@ -75,7 +73,7 @@ public class UserServiceImpl implements UserService {
 			user.setEmail(userDetails.getEmail());
 		}
 
-		user.setPassword(userDetails.getPassword());
+		user.setPassword(passwordEncoder.encode(userDetails.getPassword()));
 
 		return userRepository.save(user);
 	}

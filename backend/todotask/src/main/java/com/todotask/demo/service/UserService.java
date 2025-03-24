@@ -17,8 +17,6 @@ public interface UserService {
 	
 	public Optional<User> findById(Long id);
 	
-	public User save(User user);
-	
 	public User updateUser(Long id, User userDetails);
 	
 	public void deleteById(Long id);

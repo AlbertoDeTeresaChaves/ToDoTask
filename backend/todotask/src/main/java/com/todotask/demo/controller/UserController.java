@@ -24,16 +24,6 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 
-	@PostMapping
-	public ResponseEntity<?> create(@RequestBody User user) {
-
-		if(userService.existsByEmail(user.getEmail())) {
-			return ResponseEntity.status(HttpStatus.CONFLICT).body("El correo ya está en uso");
-		}
-		
-		return ResponseEntity.status(HttpStatus.CREATED).body(userService.save(user));
-	}
-
 	@GetMapping
 	public ResponseEntity<?> readAll() {
 
