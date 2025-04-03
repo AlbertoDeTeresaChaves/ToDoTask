@@ -1,6 +1,5 @@
 package com.todotask.demo.model;
 
-import java.time.LocalDateTime;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -18,5 +17,4 @@ public class UserDTO {
     private Long id;
     private String username;
     private String email;
-    private LocalDateTime createdAt;
 }

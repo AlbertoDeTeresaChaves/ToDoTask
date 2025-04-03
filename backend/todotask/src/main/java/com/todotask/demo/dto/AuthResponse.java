@@ -1,6 +1,6 @@
 package com.todotask.demo.dto;
 
-import com.todotask.demo.model.User;
+import com.todotask.demo.model.UserDTO;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -10,10 +10,10 @@ import lombok.Setter;
 @Setter
 public class AuthResponse {
     public String token;
-    public User user;
+    public UserDTO userDTO;
     
-    public AuthResponse(String token, User user) {
+    public AuthResponse(String token, UserDTO userDTO) {
         this.token = token;
-        this.user = user;
+        this.userDTO = userDTO;
     }
 }
