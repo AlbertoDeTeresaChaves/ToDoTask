@@ -1,0 +1,9 @@
+.screen{
+    background-color: #0d7595;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
