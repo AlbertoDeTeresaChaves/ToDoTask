@@ -7,6 +7,7 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
 import {MatDividerModule} from '@angular/material/divider';
+
 @Component({
   selector: 'app-login',
   imports: [MatInputModule,MatFormFieldModule,ReactiveFormsModule,MatIconModule,MatButtonModule,MatDividerModule],
@@ -34,8 +35,8 @@ export class LoginComponent {
   onSubmit(){
     if(this.loginForm.valid){
       this.authService.login(this.loginForm.value).subscribe({
-        next: (response) => {this.router.navigate(['home']),console.log('Login existoso',response)} ,
-        error: (err) => console.error('Login erroneo',err)
+        next: () => {this.router.navigate(['home'])} ,
+        error: (err) => console.error('Login error',err)
       });
 
     }

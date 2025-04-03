@@ -7,6 +7,7 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
 import {MatDividerModule} from '@angular/material/divider';
+import { SnackBarService } from '../../../core/services/snack-bar.service';
 @Component({
   selector: 'app-register',
   imports: [MatInputModule,MatFormFieldModule,ReactiveFormsModule,MatIconModule,MatButtonModule,MatDividerModule],
@@ -17,7 +18,7 @@ export class RegisterComponent {
   registerForm : FormGroup;
   hide = signal(true);
 
-  constructor(private formBuilder: FormBuilder,private authService: AuthService, private router: Router){
+  constructor(private formBuilder: FormBuilder,private authService: AuthService, private router: Router,private snackbarService: SnackBarService){
     this.registerForm = formBuilder.group({
       username: ['',Validators.required],
       email:['',[Validators.required,Validators.email]],
@@ -34,7 +35,7 @@ export class RegisterComponent {
   onSubmit(){
     if(this.registerForm.valid){
       this.authService.register(this.registerForm.value).subscribe({
-        next: (response) => {this.router.navigate(['home']), console.log('Register exitoso',response)},
+        next: () => {this.router.navigate(['home']), this.snackbarService.showMessage('Registro exitoso','Cerrar',3000)},
         error: (err) => console.error('Register erroneo',err)
       });
     }
