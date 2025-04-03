@@ -44,6 +44,7 @@ img{
     position: fixed;
     top: 80px;
     margin: 20px;
+    padding: 20px;
     width: 1500px;
     height: 750px;
     background-color: #FAF9FD;
