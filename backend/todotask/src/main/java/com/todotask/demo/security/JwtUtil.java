@@ -12,7 +12,7 @@ public class JwtUtil {
 	private static final Key SECRET_KEY = Keys.secretKeyFor(SignatureAlgorithm.HS256);
 
 	public static String generateToken(String email) {
-		return Jwts.builder().setSubject(email).setIssuedAt(new Date())
+		return Jwts.builder().setSubject(email).setIssuedAt(new Date(System.currentTimeMillis()))
 				.setExpiration(new Date(System.currentTimeMillis() + 86400000))
 				.signWith(SECRET_KEY).compact();
 	}
