@@ -36,7 +36,7 @@ export class LoginComponent {
   onSubmit(){
     if(this.loginForm.valid){
       this.authService.login(this.loginForm.value).subscribe({
-        next: () => {this.router.navigate(['home'])} ,
+        next: (response) => {this.authService.saveAuthUserData(response.token,response.user),this.router.navigate(['home']),console.log(response)} ,
         error: () => this.dialogService.openDialog('TENEMOS UN PROBLEMA','Usuario o contraseña incorrecto','assets/images/confused-person.jpg','300px','400px')
       });
 
