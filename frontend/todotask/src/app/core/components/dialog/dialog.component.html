@@ -1,0 +1,11 @@
+<h2 mat-dialog-title>{{ data.title }}</h2>
+    <mat-dialog-content align="center">
+        @if(data.imagePath){
+            <img [src]="data.imagePath" alt="Dialog image" class="dialog-image">
+            <br>
+        }  
+        <p>{{ data.message }}</p>
+    </mat-dialog-content>
+    <mat-dialog-actions align="center">
+        <button mat-raised-button (click)="close()">Cerrar</button>
+    </mat-dialog-actions>
