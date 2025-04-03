@@ -1,5 +1,5 @@
 import { Component, signal } from '@angular/core';
-import { AuthService } from '../../../core/auth.service';
+import { AuthService } from '../../../core/services/auth.service';
 import { FormBuilder, FormGroup, Validators,ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import {MatInputModule} from '@angular/material/input';
