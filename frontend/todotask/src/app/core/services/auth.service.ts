@@ -2,6 +2,9 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { User } from '../../models/user';
+import { Login } from '../../models/login';
+import { Register } from '../../models/register';
+import { AuthResponse } from '../../models/auth-response';
 
 @Injectable({
   providedIn: 'root'
@@ -37,12 +40,12 @@ export class AuthService {
     return !!this.getToken();
   }
 
-  login(credentials:{email:string,password:string}): Observable<any>{
-    return this.http.post(`${this.apiUrl}/login`,credentials);
+  login(credentials:Login): Observable<AuthResponse>{
+    return this.http.post<AuthResponse>(`${this.apiUrl}/login`,credentials);
   }
 
-  register(user:any):Observable<any>{
-    return this.http.post(`${this.apiUrl}/register`, user);
+  register(user:Register):Observable<AuthResponse>{
+    return this.http.post<AuthResponse>(`${this.apiUrl}/register`, user);
 
   }
 }

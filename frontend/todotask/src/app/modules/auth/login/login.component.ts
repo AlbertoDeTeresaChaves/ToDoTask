@@ -8,6 +8,7 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
 import {MatDividerModule} from '@angular/material/divider';
 import { DialogService } from '../../../core/services/dialog.service';
+import { AuthResponse } from '../../../models/auth-response';
 
 @Component({
   selector: 'app-login',
@@ -36,7 +37,7 @@ export class LoginComponent {
   onSubmit(){
     if(this.loginForm.valid){
       this.authService.login(this.loginForm.value).subscribe({
-        next: (response) => {this.authService.saveAuthUserData(response.token,response.userDTO),this.router.navigate(['home']),console.log(response.userDTO)} ,
+        next: (response: AuthResponse) => {this.authService.saveAuthUserData(response.token,response.userDTO),this.router.navigate(['home']),console.log(response.userDTO)} ,
         error: () => this.dialogService.openDialog('TENEMOS UN PROBLEMA','Usuario o contraseña incorrecto','assets/images/confused-person.jpg','300px','400px')
       });
 

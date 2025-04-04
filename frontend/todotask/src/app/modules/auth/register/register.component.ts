@@ -9,6 +9,7 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatDividerModule} from '@angular/material/divider';
 import { SnackBarService } from '../../../core/services/snack-bar.service';
 import { DialogService } from '../../../core/services/dialog.service';
+import { AuthResponse } from '../../../models/auth-response';
 @Component({
   selector: 'app-register',
   imports: [MatInputModule,MatFormFieldModule,ReactiveFormsModule,MatIconModule,MatButtonModule,MatDividerModule],
@@ -36,7 +37,7 @@ export class RegisterComponent {
   onSubmit(){
     if(this.registerForm.valid){
       this.authService.register(this.registerForm.value).subscribe({
-        next: (response) => {this.authService.saveAuthUserData(response.token,response.userDTO),this.router.navigate(['home']), this.snackbarService.showMessage('Registro exitoso','Cerrar',3000)},
+        next: (response:AuthResponse) => {this.authService.saveAuthUserData(response.token,response.userDTO),this.router.navigate(['home']), this.snackbarService.showMessage('Registro exitoso','Cerrar',3000)},
         error: () => this.dialogService.openDialog('OCURRIO UN ERROR','Email ya registrado','assets/images/confused-person.jpg',"300px","400px")
       });
     }
