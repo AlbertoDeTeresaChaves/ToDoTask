@@ -36,7 +36,7 @@ export class RegisterComponent {
   onSubmit(){
     if(this.registerForm.valid){
       this.authService.register(this.registerForm.value).subscribe({
-        next: (response) => {this.authService.saveAuthUserData(response.token,response.user),this.router.navigate(['home']), this.snackbarService.showMessage('Registro exitoso','Cerrar',3000)},
+        next: (response) => {this.authService.saveAuthUserData(response.token,response.userDTO),this.router.navigate(['home']), this.snackbarService.showMessage('Registro exitoso','Cerrar',3000)},
         error: () => this.dialogService.openDialog('OCURRIO UN ERROR','Email ya registrado','assets/images/confused-person.jpg',"300px","400px")
       });
     }
