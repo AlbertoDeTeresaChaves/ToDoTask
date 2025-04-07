@@ -1,17 +1,34 @@
 <div class="screen">
    <div class="toolbar-container">
         <mat-toolbar>
-            <button mat-mini-fab class="example-icon" aria-label="Example icon-button with menu icon">
+            <button mat-mini-fab class="example-icon" (click)="opened =!opened" aria-label="Example icon-button with menu icon">
                 <mat-icon>menu</mat-icon>
             </button>
             <span class="example-spacer"></span>
-            <span class="username-text">USERNAME</span>
-            <div class="image-profile">
-                <img src="assets/images/default-profile.jpg" alt="">
-            </div>
+            
+                <span class="username-text">{{user?.username?.toUpperCase()}}</span>
+                <div class="image-profile" [matMenuTriggerFor]="menu">
+                    <img src="assets/images/default-profile.jpg" alt="">
+                </div>
+                <mat-menu #menu="matMenu">
+                    <button mat-menu-item >Editar perfil</button>
+                    <button mat-menu-item (click)="logout()" routerLink="login">Cerrar Sesion</button>
+                  </mat-menu>
         </mat-toolbar>
     </div>
-    <div class="content">
-        <router-outlet/>
-    </div>
+    <mat-sidenav-container >
+        <mat-sidenav [(opened)]="opened"> 
+            <mat-nav-list>
+                <a mat-list-item routerLink="home" (click)="opened =!opened">Home</a>
+                <a mat-list-item routerLink="home" (click)="opened =!opened">Tasks</a>
+                <a mat-list-item routerLink="home" (click)="opened =!opened">Users</a>
+            </mat-nav-list>
+        </mat-sidenav>
+        <mat-sidenav-content>
+            <div class="content">
+                <router-outlet/>
+            </div>
+        </mat-sidenav-content>
+    </mat-sidenav-container>
+ 
 </div>
