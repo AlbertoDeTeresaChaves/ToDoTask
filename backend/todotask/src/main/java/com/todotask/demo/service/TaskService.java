@@ -1,5 +1,6 @@
 package com.todotask.demo.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.domain.Page;
@@ -13,6 +14,8 @@ public interface TaskService {
 	public Iterable<Task> findAll();
 	
 	public Page<Task> findAll(Pageable pageable);
+	
+	public List<Task> findLatestTasks();
 	
 	public Optional<Task> findById(Long id);
 	

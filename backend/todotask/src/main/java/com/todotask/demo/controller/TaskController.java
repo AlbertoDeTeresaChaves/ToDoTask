@@ -34,7 +34,12 @@ public class TaskController {
 	public ResponseEntity<?> readAll() {
 		return ResponseEntity.ok(taskService.findAll());
 	}
-
+	
+	@GetMapping("/latest")
+	public ResponseEntity<?> getLatestTasks(){
+		return ResponseEntity.ok(taskService.findLatestTasks());
+	}
+	
 	@GetMapping("/{id}")
 	public ResponseEntity<?> read(@PathVariable(value = "id") Long taskId) {
 

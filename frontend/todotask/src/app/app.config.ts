@@ -6,5 +6,8 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { jwtInterceptor } from './core/interceptors/jwt.interceptor';
 
 export const appConfig: ApplicationConfig = {
-  providers: [provideZoneChangeDetection({ eventCoalescing: true }), provideRouter(routes), provideHttpClient(withInterceptors([jwtInterceptor])),importProvidersFrom(MatDialogModule)]
+  providers: [provideZoneChangeDetection({ eventCoalescing: true }), 
+              provideRouter(routes), 
+              provideHttpClient(withInterceptors([jwtInterceptor])),
+              importProvidersFrom(MatDialogModule)]
 };

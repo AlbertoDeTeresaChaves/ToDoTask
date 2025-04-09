@@ -1,3 +1,30 @@
 <div class="home-container">
-    <p>HOME WORKS</p>
+    <p>RECENT TASKS</p>
+   <mat-card>
+        <mat-card-content>
+            <table mat-table [dataSource]="latestTasks">
+                <ng-container matColumnDef="taskId">
+                    <mat-header-cell *matHeaderCellDef>Id</mat-header-cell>
+                    <mat-cell *matCellDef="let task">{{task.taskId}}</mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="taskName">
+                    <mat-header-cell *matHeaderCellDef>Name</mat-header-cell>
+                    <mat-cell *matCellDef="let task">{{task.taskName}}</mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="status">
+                    <mat-header-cell *matHeaderCellDef>Status</mat-header-cell>
+                    <mat-cell *matCellDef="let task" [ngClass]="getStatusClass(task.status)">{{task.status}}</mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="assigned">
+                    <mat-header-cell *matHeaderCellDef>Assigned</mat-header-cell>
+                    <mat-cell *matCellDef="let task">{{task.assigned.username}}</mat-cell>
+                </ng-container>
+                <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                <mat-row (click)="navigateToTask(row.taskId)" matRipple *matRowDef="let row; columns: displayedColumns;"></mat-row>
+                
+            </table>
+            <app-centered-button text="Ver todas las tareas" route="/tasks"></app-centered-button>
+        </mat-card-content>
+
+   </mat-card>   
 </div>

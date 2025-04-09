@@ -1,5 +1,6 @@
 package com.todotask.demo.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.domain.Page;
@@ -38,6 +39,13 @@ public class TaskServiceImpl implements TaskService {
 		return taskRepository.findAll(pageable);
 	}
 
+	
+	@Override
+	@Transactional(readOnly = true)
+	public List<Task> findLatestTasks() {
+		return taskRepository.findTop5ByOrderByUpdatedAtDesc();
+	}
+	
 	@Override
 	@Transactional(readOnly = true)
 	public Optional<Task> findById(Long id) {
