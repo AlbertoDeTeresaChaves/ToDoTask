@@ -6,12 +6,12 @@ import { MatButtonModule } from '@angular/material/button';
 import {MatTableModule} from '@angular/material/table';
 import {MatRippleModule} from '@angular/material/core';
 import { Router } from '@angular/router';
-import { CenteredButtonComponent } from "../../../core/components/centered-button/centered-button.component";
+import { CenteredButtonComponent } from "../../../shared/components/centered-button/centered-button.component";
 import { NgClass } from '@angular/common';
 
 @Component({
   selector: 'app-home',
-  imports: [MatCardModule, MatButtonModule, MatTableModule, MatRippleModule, CenteredButtonComponent,NgClass],
+  imports: [MatCardModule, MatButtonModule, MatTableModule, MatRippleModule, CenteredButtonComponent, NgClass],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
