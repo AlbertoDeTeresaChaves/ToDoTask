@@ -1,0 +1,25 @@
+.mat-mdc-row:hover .mat-mdc-cell {
+    background-color: rgb(238, 237, 237);
+  }
+  
+.status-pending {
+  color: #ff9800;
+  font-weight: bold;
+}
+
+.status-in-progress {
+  color: #2196f3;
+  font-weight: bold;
+}
+
+.status-completed {
+  color: #4caf50;
+  font-weight: bold;
+}
+.content{
+    margin: 0;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+
+}

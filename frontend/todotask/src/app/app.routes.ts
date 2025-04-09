@@ -8,11 +8,15 @@ import { authGuard } from './core/guards/auth.guard';
 import { NgModule } from '@angular/core';
 
 export const routes: Routes = [
-  { path: '', redirectTo: 'login', pathMatch: 'full' },
+  { path: '', redirectTo: 'home', pathMatch: 'full' },
   {
     path: '',
     component: MainScreenComponent,
-    children: [{ path: 'home', component: HomeComponent }],
+    children: [{ path: 'home', component: HomeComponent },
+      {path:'tasks',
+        loadChildren: ()=> import('./modules/pages/tasks/task.routes').then(m => m.TasksRoutingModule)
+      }
+    ],
     canActivate: [authGuard]
   },
   {
@@ -24,7 +28,7 @@ export const routes: Routes = [
       { path: '', redirectTo: 'login', pathMatch: 'full' },
     ],
   },
-  { path: '**', redirectTo: 'login' },
+  { path: '**', redirectTo: 'home' },
 ];
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
