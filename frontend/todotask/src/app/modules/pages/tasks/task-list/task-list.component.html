@@ -1,6 +1,8 @@
-<div class="home-container">
-    <div class="content"><h2>ALL TASKS</h2></div>
-   <mat-card>
+<div class="header"><h2>ALL TASKS</h2></div>
+<div style="text-align: right; margin-bottom: 10px">
+<button mat-flat-button [routerLink]="['/tasks/create']">Create new task</button></div>
+@if(Tasks.length){
+    <mat-card>
         <mat-card-content>
             <table mat-table [dataSource]="Tasks">
                 <ng-container matColumnDef="taskId">
@@ -26,4 +28,7 @@
         </mat-card-content>    
    </mat-card>   
    <mat-paginator [length]="Tasks.length" pageSize="10"></mat-paginator>
-</div>
+}@else {
+    <div class="content-empty"><p>TASK LIST EMPTY</p></div>
+    
+}

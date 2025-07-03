@@ -1,3 +1,9 @@
+:host{
+  display: block;
+  height: 100%;
+  width: 100%;
+}
+
 .mat-mdc-row:hover .mat-mdc-cell {
     background-color: rgb(238, 237, 237);
   }
@@ -16,10 +22,17 @@
   color: #4caf50;
   font-weight: bold;
 }
-.content{
+.header{
     margin: 0;
     align-items: center;
     justify-content: center;
     display: flex;
+}
 
+.content-empty{
+  flex: 1; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-style: italic;
 }

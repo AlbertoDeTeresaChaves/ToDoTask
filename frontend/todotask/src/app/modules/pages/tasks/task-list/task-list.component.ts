@@ -3,13 +3,16 @@ import { MatCardModule } from '@angular/material/card';
 import { MatTableModule } from '@angular/material/table';
 import { Task } from '../../../../models/task';
 import { TaskService } from '../task.service';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { NgClass } from '@angular/common';
 import {MatPaginatorModule} from '@angular/material/paginator';
+import { MatButtonModule } from '@angular/material/button';
+import {MatRippleModule} from '@angular/material/core';
+
 
 @Component({
   selector: 'app-task-list',
-  imports: [MatCardModule,MatTableModule,NgClass, MatPaginatorModule],
+  imports: [MatCardModule,MatTableModule,NgClass, MatPaginatorModule,MatButtonModule,RouterLink,MatRippleModule],
   templateUrl: './task-list.component.html',
   styleUrl: './task-list.component.css'
 })

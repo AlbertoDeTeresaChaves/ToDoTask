@@ -1,0 +1,34 @@
+
+<h2>NEW TASK</h2>
+<br>    
+<form [formGroup]="createTaskForm">
+    <div class="first-line">
+        <section>
+            <mat-label>Task name: </mat-label>
+            <mat-form-field appearance="outline">
+                
+                <input matInput type="text" formControlName="taskName">
+            </mat-form-field>
+        </section>
+        <button mat-flat-button type="submit" (click)="onSubmit()"  [disabled]="createTaskForm.invalid">
+            Create task
+        </button>
+    </div>
+
+    <mat-label>Description: </mat-label>
+    <mat-form-field appearance="outline">
+        <input matInput type="text" formControlName="description">
+    </mat-form-field>
+
+    <mat-label>Assigned:</mat-label>
+    <mat-form-field appearance="outline">
+        <input type="text" matInput [matAutocomplete]="auto" formControlName="assigned">
+        <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+            @for (user of users ; track user.id) {
+                <mat-option [value]="user">{{user.username}}</mat-option>
+              }
+        </mat-autocomplete>
+    </mat-form-field>
+    <br>
+
+</form>
