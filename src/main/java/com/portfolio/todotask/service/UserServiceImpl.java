@@ -11,6 +11,8 @@ import org.springframework.transaction.annotation.Transactional;
 import com.portfolio.todotask.dto.UserRequestDTO;
 import com.portfolio.todotask.dto.UserResponseDTO;
 import com.portfolio.todotask.enums.Role;
+import com.portfolio.todotask.exception.ResourceConflictException;
+import com.portfolio.todotask.exception.ResourceNotFoundException;
 import com.portfolio.todotask.mapper.UserMapper;
 import com.portfolio.todotask.model.User;
 import com.portfolio.todotask.repository.UserRepository;
@@ -34,10 +36,10 @@ public class UserServiceImpl implements UserService{
 		log.info("Intentando crear usuario con email: {}", userRequestDTO.getEmail());
 		
 		if(userRepository.existsByEmail(userRequestDTO.getEmail())) {
-			throw new RuntimeException("Email ya registrado");
+			throw new ResourceConflictException("Email ya registrado");
 		}
 		if(userRepository.existsByUsername(userRequestDTO.getUsername())) {
-			throw new RuntimeException("Nombre de usuario ya registrado");
+			throw new ResourceConflictException("Nombre de usuario ya registrado");
 		}
 		
 		User user = userMapper.toEntity(userRequestDTO);
@@ -64,7 +66,7 @@ public class UserServiceImpl implements UserService{
 		log.debug("Buscando usuario ID: {}", id);
 		
 		return userRepository.findById(id).map(userMapper::toDTO)
-				.orElseThrow(()-> new RuntimeException("Usuario no encotrado con el id: " + id));
+				.orElseThrow(()-> new ResourceNotFoundException("Usuario no encotrado con el id: " + id));
 	}
 
 	@Override
@@ -73,18 +75,18 @@ public class UserServiceImpl implements UserService{
 		log.info("Intentado actualizar el usuario con id:{}",id);
 		
 		User user = userRepository.findById(id)
-				.orElseThrow(()-> new RuntimeException("Usuario no encontrado con el id"));
+				.orElseThrow(()-> new ResourceNotFoundException("Usuario no encontrado con el id"));
 		
 		if(!user.getUsername().equals(userRequestDTO.getUsername())) {
 			if(userRepository.existsByUsername(userRequestDTO.getUsername())){
-				throw new RuntimeException("Nombre de usuario ya en uso");
+				throw new ResourceConflictException("Nombre de usuario ya en uso");
 			}
 			user.setUsername(userRequestDTO.getUsername());
 		}
 		
 		if(!user.getEmail().equals(userRequestDTO.getEmail())) {
 			if(userRepository.existsByEmail(userRequestDTO.getEmail())){
-				throw new RuntimeException("Email ya en uso");
+				throw new ResourceConflictException("Email ya en uso");
 			}
 			user.setEmail(userRequestDTO.getEmail());
 		}
@@ -106,7 +108,7 @@ public class UserServiceImpl implements UserService{
 		log.info("Intentado borrar el usuario con id:{}",id);
 		
 		if(!userRepository.existsById(id)) {
-			throw new RuntimeException("Usuario no encotrado para eliminar");
+			throw new ResourceNotFoundException("Usuario no encotrado para eliminar");
 		}
 	
 		userRepository.deleteById(id);
