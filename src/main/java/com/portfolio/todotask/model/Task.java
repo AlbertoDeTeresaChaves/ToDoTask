@@ -19,6 +19,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -65,10 +67,21 @@ public class Task {
 	private LocalDate dueDate;
 	
 	@Column(name="created_at",updatable=false,nullable =false)
-	private LocalDateTime createdAt = LocalDateTime.now();
+	private LocalDateTime createdAt;
 	
 	@Column(name="updated_at",nullable =false)
-	private LocalDateTime updatedAt = LocalDateTime.now();
+	private LocalDateTime updatedAt;
+	
+	@PrePersist
+	protected void onPrePersist(){
+		this.setCreatedAt(LocalDateTime.now());
+		this.setUpdatedAt(LocalDateTime.now());
+	}
+	
+	@PreUpdate
+	protected void onPreUpdate() {
+		this.setUpdatedAt(LocalDateTime.now());
+	}
 	
 	
 }
