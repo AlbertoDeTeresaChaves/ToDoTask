@@ -36,10 +36,12 @@ public class UserServiceImpl implements UserService{
 		log.info("Intentando crear usuario con email: {}", userRequestDTO.getEmail());
 		
 		if(userRepository.existsByEmail(userRequestDTO.getEmail())) {
-			throw new ResourceConflictException("Email ya registrado");
+			log.error("Create user failed: Email registered");
+			throw new ResourceConflictException("Email registered");
 		}
 		if(userRepository.existsByUsername(userRequestDTO.getUsername())) {
-			throw new ResourceConflictException("Nombre de usuario ya registrado");
+			log.error("Create user failed: Username registered");
+			throw new ResourceConflictException("Username registered");
 		}
 		
 		User user = userMapper.toEntity(userRequestDTO);
@@ -48,7 +50,7 @@ public class UserServiceImpl implements UserService{
 		user.setRole(Role.USER);
 		
 		User savedUser = userRepository.save(user);
-		log.info("Usuario creado con éxito: ID {}", savedUser.getId());
+		log.info("User created successfully: ID {}", savedUser.getId());
 		return userMapper.toDTO(savedUser);
 	}
 

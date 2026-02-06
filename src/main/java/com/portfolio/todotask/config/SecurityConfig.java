@@ -20,9 +20,7 @@ import com.portfolio.todotask.service.CustomUserDetailsService;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
-	
-	@Autowired
-	private CustomUserDetailsService customUserDetailsService;
+
 	
 	@Autowired
 	private AuthEntryPointJwt unathorizedHandler;
